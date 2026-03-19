@@ -135,6 +135,51 @@ code { background:var(--card); padding:0.1rem 0.3rem; border-radius:3px; font-si
 
 <div class="formula">ETP = Points Per Game &times; Expected Games<br>
 <span class="muted" style="font-size:0.85em">25 PPG on a 6-seed (2.1 games) = 52 ETP. 15 PPG on a 1-seed (4.5 games) = 68 ETP. Tournament structure > raw scoring.</span></div>
+
+<details>
+<summary style="cursor:pointer;color:var(--a);font-weight:600;font-size:0.9em;margin:1rem 0 0.5rem">Model Architecture</summary>
+<pre style="font-size:0.6em;line-height:1.3;overflow-x:auto;background:var(--card);padding:0.8rem;border-radius:8px;border:1px solid var(--bdr);color:var(--m)">
+ REAL DATA (stats, odds, bracket, injuries)
+     |
+     +------------------+--------------------+
+     |                  |                    |
+ ETP CALCULATOR    PERSONA GEN          ECOSYSTEM GEN
+ (deterministic)   (Claude Sonnet)      (Claude Sonnet)
+     |                  |                    |
+ PPG x P(advance)  50 personas:         20 agents:
+ per round         4-layer backstory    analysts (stats/eye)
+ = expected pts    Latin hypercube      influencers, reporters
+                   6 behavioral axes   rumor, mock draft
+                        |                    |
+                        +--------+-----------+
+                                 |
+                    SOCIAL SIMULATION (OASIS)
+                                 |
+                   ecosystem agents post content
+                   (96 posts across 6 rounds)
+                                 |
+                   drafters consume SELECTIVELY
+                   (ESPN fan != KenPom reader)
+                                 |
+                   memory streams accumulate
+                   (Stanford: recency x importance x relevance)
+                                 |
+                         REFLECTION (Claude)
+                                 |
+                   memories -> 3-5 beliefs -> JSON params
+                   {valuations, risk, biases, budget}
+                                 |
+                      AUCTION ENGINE (Python)
+                                 |
+                   16 agents x ascending price x noise
+                   1,000+ runs -> price distributions
+                                 |
+                   +-------------+
+                   |
+              VALUE = ETP - Market$
+              rankings + strategy + draft assistant
+</pre>
+</details>
 </ul>
 
 <h2>What the simulation predicted</h2>
@@ -197,27 +242,34 @@ code { background:var(--card); padding:0.1rem 0.3rem; border-radius:3px; font-si
 
 <p><strong>The Illinois stack finished last.</strong> One team drafted 4 Illinois players (3-seed). One early upset and half their roster goes home together. DraftFish's diversification guidance — spread across 4+ teams — was validated. Our roster spans 5 different teams.</p>
 
-<h3>Suggested roster ($100 budget)</h3>
-<p>Optimized from sim data — maximizes total ETP while diversifying across teams and keeping budget for bidding wars.</p>
-
-<div style="background:var(--card);border:1px solid var(--bdr);border-radius:8px;padding:1rem;margin:0.8rem 0">
-<div style="display:flex;justify-content:space-between;padding:0.3rem 0;border-bottom:1px solid var(--bdr)"><span><strong>Cameron Boozer</strong> <span class="muted">(Duke)</span></span><span><span class="muted">ETP 100</span> &middot; <strong>$49</strong></span></div><div style="display:flex;justify-content:space-between;padding:0.3rem 0;border-bottom:1px solid var(--bdr)"><span><strong>Alex Condon</strong> <span class="muted">(Florida)</span></span><span><span class="muted">ETP 51</span> &middot; <strong>$3</strong></span></div><div style="display:flex;justify-content:space-between;padding:0.3rem 0;border-bottom:1px solid var(--bdr)"><span><strong>Aday Mara</strong> <span class="muted">(Michigan)</span></span><span><span class="muted">ETP 51</span> &middot; <strong>$3</strong></span></div><div style="display:flex;justify-content:space-between;padding:0.3rem 0;border-bottom:1px solid var(--bdr)"><span><strong>Emanuel Sharp</strong> <span class="muted">(Houston)</span></span><span><span class="muted">ETP 52</span> &middot; <strong>$5</strong></span></div><div style="display:flex;justify-content:space-between;padding:0.3rem 0;border-bottom:1px solid var(--bdr)"><span><strong>Jaden Bradley</strong> <span class="muted">(Arizona)</span></span><span><span class="muted">ETP 59</span> &middot; <strong>$12</strong></span></div><div style="display:flex;justify-content:space-between;padding:0.3rem 0;border-bottom:1px solid var(--bdr)"><span><strong>Morez Johnson Jr.</strong> <span class="muted">(Michigan)</span></span><span><span class="muted">ETP 58</span> &middot; <strong>$11</strong> <span style="color:var(--m);font-size:0.8em">[BENCH]</span></span></div>
-<div style="margin-top:0.5rem;font-weight:700">Total: $83 spent &middot; $17 remaining &middot; 372 projected ETP</div>
-</div>
-
-<h3>Sleepers — high ETP, low cost</h3>
-<p>These players have 40+ ETP but the simulated room barely notices them. If you can get any of these for $1-5, you're stealing points.</p>
+<h3>Sleepers <span class="muted" style="font-weight:400;font-size:0.8em">— invisible to casuals, max spend ~30% of ETP</span></h3>
 <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin:0.5rem 0">
-<span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Alex Condon</strong> <span class="muted">(Florida)</span> 51 ETP for <strong>$3</strong></span><span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Aday Mara</strong> <span class="muted">(Michigan)</span> 51 ETP for <strong>$3</strong></span><span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Emanuel Sharp</strong> <span class="muted">(Houston)</span> 52 ETP for <strong>$5</strong></span><span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Tobe Awaka</strong> <span class="muted">(Arizona)</span> 46 ETP for <strong>$2</strong></span><span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Rueben Chinyelu</strong> <span class="muted">(Florida)</span> 46 ETP for <strong>$2</strong></span><span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Walter Clayton Jr.</strong> <span class="muted">(Florida)</span> 45 ETP for <strong>$2</strong></span><span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Elliot Cadeau</strong> <span class="muted">(Michigan)</span> 45 ETP for <strong>$2</strong></span><span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Pryce Sandfort</strong> <span class="muted">(Nebraska)</span> 46 ETP for <strong>$3</strong></span><span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Tamin Lipsey</strong> <span class="muted">(Iowa State)</span> 43 ETP for <strong>$2</strong></span><span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Jeremy Fears Jr.</strong> <span class="muted">(Michigan St.)</span> 44 ETP for <strong>$5</strong></span>
+<span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Emanuel Sharp</strong> <span class="muted">(Houston, 2-sd)</span> 59.6 ETP &middot; max <strong>$18</strong></span>
+<span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Morez Johnson Jr.</strong> <span class="muted">(Michigan, 1-sd)</span> 56.5 ETP &middot; max <strong>$17</strong></span>
+<span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Alex Condon</strong> <span class="muted">(Florida, 1-sd)</span> 58.8 ETP &middot; max <strong>$18</strong></span>
+<span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Braden Smith</strong> <span class="muted">(Purdue, 2-sd)</span> 50.6 ETP &middot; max <strong>$15</strong></span>
+<span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Aday Mara</strong> <span class="muted">(Michigan, 1-sd)</span> 50.1 ETP &middot; max <strong>$15</strong></span>
+<span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Fletcher Loyer</strong> <span class="muted">(Purdue, 2-sd)</span> 49.9 ETP &middot; max <strong>$15</strong></span>
+<span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Tamin Lipsey</strong> <span class="muted">(Iowa State, 2-sd)</span> 49.8 ETP &middot; max <strong>$15</strong></span>
+<span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Solo Ball</strong> <span class="muted">(UConn, 2-sd)</span> 45.7 ETP &middot; max <strong>$14</strong></span>
+<span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Elliot Cadeau</strong> <span class="muted">(Michigan, 1-sd)</span> 44.0 ETP &middot; max <strong>$13</strong></span>
+<span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Boogie Fland</strong> <span class="muted">(Florida, 1-sd)</span> 45.5 ETP &middot; max <strong>$14</strong></span>
+<span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Pryce Sandfort</strong> <span class="muted">(Nebraska, 4-sd)</span> 49.7 ETP &middot; max <strong>$15</strong></span>
+<span style="background:rgba(46,160,67,0.15);border:1px solid rgba(46,160,67,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>David Mirkovic</strong> <span class="muted">(Illinois, 3-sd)</span> 46.8 ETP &middot; max <strong>$14</strong></span>
 </div>
 
-<h3>Overpay traps — don't get caught</h3>
-<p>These players get bid up well past their ETP because they have name recognition, hype, or both. Let someone else overpay.</p>
+<h3>Overpay traps <span class="muted" style="font-weight:400;font-size:0.8em">— name recognition inflates past ETP, max spend ~65% of ETP</span></h3>
 <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin:0.5rem 0">
-<span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Thomas Haugh</strong> <span class="muted">(Florida)</span> $33 but only 70 ETP</span><span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Brayden Burries</strong> <span class="muted">(Arizona)</span> $29 but only 70 ETP</span><span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>AJ Dybantsa</strong> <span class="muted">(BYU)</span> $29 but only 52 ETP</span><span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Darius Acuff Jr.</strong> <span class="muted">(Arkansas)</span> $28 but only 59 ETP</span><span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Isaiah Evans</strong> <span class="muted">(Duke)</span> $25 but only 66 ETP</span><span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Yaxel Lendeborg</strong> <span class="muted">(Michigan)</span> $25 but only 64 ETP</span><span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Graham Ike</strong> <span class="muted">(Gonzaga)</span> $23 but only 55 ETP</span>
+<span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>AJ Dybantsa</strong> <span class="muted">(BYU, 6-sd)</span> 47.9 ETP &middot; will cost <strong>$30+</strong></span>
+<span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Ja'Kobi Gillespie</strong> <span class="muted">(Tenn, 6-sd)</span> 43.7 ETP &middot; will cost <strong>$25+</strong></span>
+<span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Tyler Tanner</strong> <span class="muted">(Vanderbilt, 5-sd)</span> 45.6 ETP &middot; will cost <strong>$25+</strong></span>
+<span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Zuby Ejiofor</strong> <span class="muted">(St. John's, 5-sd)</span> 39.0 ETP &middot; will cost <strong>$25+</strong></span>
+<span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Thijs De Ridder</strong> <span class="muted">(Virginia, 3-sd)</span> 42.8 ETP &middot; will cost <strong>$20+</strong></span>
+<span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Nate Ament</strong> <span class="muted">(Tenn, 6-sd)</span> 42.5 ETP &middot; will cost <strong>$15+</strong></span>
+<span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.3);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.85em"><strong>Nick Boyd</strong> <span class="muted">(Wisconsin, 5-sd)</span> 44.3 ETP &middot; will cost <strong>$15+</strong></span>
 </div>
 
-<h3>Full rankings</h3>
+<h3>Full rankings <span class="muted" style="font-weight:400;font-size:0.7em">— scroll to explore all 56 players</span></h3>
 <div style="background:var(--card);border:1px solid var(--bdr);border-radius:8px;padding:0.8rem;margin:0.8rem 0">
 <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap">
 <span class="muted" style="font-size:0.85em">Room aggression:</span>
@@ -228,7 +280,7 @@ code { background:var(--card); padding:0.1rem 0.3rem; border-radius:3px; font-si
 </div>
 <p class="muted" style="font-size:0.75em;margin-top:0.3rem">Slide right to match aggressive rooms (like ours — Boozer $82). Prices scale based on sim-calibrated room behavior patterns.</p>
 </div>
-<div class="tbl">
+<div class="tbl" id="rankings-scroll" style="max-height:500px;overflow-y:auto">
 <table id="rankings-table">
 <tr><th>#</th><th>Player</th><th>Team</th><th>Sd</th><th>ETP</th><th>Price</th><th>Value</th><th>Note</th><th></th></tr>
 </table>
@@ -275,6 +327,11 @@ function render() {
 
 slider.addEventListener('input', render);
 render();
+// Scroll table to ~row 20 on load
+setTimeout(function() {
+  var sc = document.getElementById('rankings-scroll');
+  if (sc) sc.scrollTop = 19 * 28;
+}, 100);
 </script>
 
 <h2>The information ecosystem</h2>
@@ -287,9 +344,9 @@ render();
     <div class="tw-body">Just spent 3 hours rewatching Cameron Boozer film and I need to talk about something nobody&#x27;s mentioning. The 22.7 PPG is the headline but watch his footwork in the mid-post. Textbook drop step. He sells the pump fake like a veteran — draws contact, finishes through it. This is a kid who was coached RIGHT. Duke&#x27;s 1-seed is built on fundamentals most pros never develop. Thread coming tonight. #FilmRoom #NCAATournament</div>
     <div class="tw-tags"><span class="htag">#Cameron Boozer</span> <span class="htag">#Duke</span></div>
     <div class="tw-actions">
-      <span>&#128172; 30</span>
-      <span>&#128257; 19</span>
-      <span>&#10084;&#65039; 87</span>
+      <span>&#128172; 5</span>
+      <span>&#128257; 5</span>
+      <span>&#10084;&#65039; 10</span>
       <span>&#128065; 84K</span>
     </div>
   </div>
@@ -300,9 +357,9 @@ render();
     <div class="tw-body">Hot take grounded in data: AJ Dybantsa&#x27;s 25.3 PPG at BYU (6-seed) is impressive but schedule-adjusted efficiency tells a more complicated story. Darryn Peterson&#x27;s 19.8 for Kansas against B12 defenses night in and night out is underrated by comparison. Both are first-round locks. The question is which one sustains production against elite tournament defense. The KenPom splits don&#x27;t lie. Full newsletter breakdown dropping at 8PM. #KenPom #NBADraft</div>
     <div class="tw-tags"><span class="htag">#AJ Dybantsa</span> <span class="htag">#BYU</span> <span class="htag">#Darryn Peterson</span> <span class="htag">#Kansas</span></div>
     <div class="tw-actions">
-      <span>&#128172; 27</span>
-      <span>&#128257; 9</span>
-      <span>&#10084;&#65039; 63</span>
+      <span>&#128172; 24</span>
+      <span>&#128257; 8</span>
+      <span>&#10084;&#65039; 40</span>
       <span>&#128065; 47K</span>
     </div>
   </div>
@@ -313,9 +370,9 @@ render();
     <div class="tw-body">Predictive model output for this NCAA field: Four 1-seeds (Duke, Florida, Arizona, Michigan) hold 9 of the projected top-15 picks. That concentration is historically anomalous. Cameron Boozer, Thomas Haugh, and Yaxel Lendeborg all projecting top-5. My selection committee experience says this bracket is top-heavy in a way that creates 5-12 chaos. 1-seeds advancing to Final Four: 67% in current model. Posting full probability tables now. #BracketBreakdown #Analytics</div>
     <div class="tw-tags"><span class="htag">#Cameron Boozer</span> <span class="htag">#Duke</span> <span class="htag">#Thomas Haugh</span> <span class="htag">#Florida</span></div>
     <div class="tw-actions">
-      <span>&#128172; 24</span>
-      <span>&#128257; 20</span>
-      <span>&#10084;&#65039; 150</span>
+      <span>&#128172; 10</span>
+      <span>&#128257; 13</span>
+      <span>&#10084;&#65039; 104</span>
       <span>&#128065; 187K</span>
     </div>
   </div>
@@ -326,9 +383,9 @@ render();
     <div class="tw-body">Everyone running their PPG numbers and I&#x27;m over here watching Jaden Bradley make guards miserable for 35 straight possessions. 13.5 points per game. That number means NOTHING. I coached defense for 15 years. I know what I&#x27;m looking at. Bradley is the reason Arizona is a 1-seed — not despite his scoring line, but because of what he does without the ball. Kids today want to count buckets. I count stops. Arizona is dangerous. #DefenseWinsChampionships</div>
     <div class="tw-tags"><span class="htag">#Jaden Bradley</span> <span class="htag">#Arizona</span></div>
     <div class="tw-actions">
-      <span>&#128172; 39</span>
-      <span>&#128257; 6</span>
-      <span>&#10084;&#65039; 195</span>
+      <span>&#128172; 20</span>
+      <span>&#128257; 5</span>
+      <span>&#10084;&#65039; 271</span>
       <span>&#128065; 87K</span>
     </div>
   </div>
@@ -339,9 +396,9 @@ render();
     <div class="tw-body">Spent the morning re-watching Arizona&#x27;s offensive sets from their last three games. Jaden Bradley&#x27;s court vision is genuinely special — he&#x27;s reading second and third options before the ball is even inbounded. But what jumps off the screen is how Koa Peat plays off his gravity. When Bradley collapses the defense, Peat&#x27;s footwork in the dunker spot is as clean as any big I&#x27;ve seen at this level. The Wildcats are a dangerous 1-seed because they move the ball with purpose, not just talent. Round 2 opponents need to account for all three of Burries (15.9 PPG), Peat (14.5), and Bradley (13.5) — you can&#x27;t scheme for one without opening a window for the other two.</div>
     <div class="tw-tags"><span class="htag">#Jaden Bradley</span> <span class="htag">#Koa Peat</span> <span class="htag">#Brayden Burries</span> <span class="htag">#Arizona</span></div>
     <div class="tw-actions">
-      <span>&#128172; 10</span>
-      <span>&#128257; 4</span>
-      <span>&#10084;&#65039; 277</span>
+      <span>&#128172; 31</span>
+      <span>&#128257; 17</span>
+      <span>&#10084;&#65039; 103</span>
       <span>&#128065; 84K</span>
     </div>
   </div>
@@ -352,9 +409,9 @@ render();
     <div class="tw-body">Running the numbers ahead of Round 2: Cameron Boozer at 22.7 PPG for a 1-seed Duke squad is a strong statistical profile, but context matters — AJ Dybantsa at 25.3 for a 6-seed BYU tells a very different efficiency story. Leading scorer on a 6-seed hitting those numbers means he&#x27;s doing it with weaker surrounding talent and against a compressed schedule. The adjusted efficiency gap vs. tournament-caliber competition is the real question. Meanwhile Michigan&#x27;s load distribution — Lendeborg (14.6), Johnson (13.1), Mara (11.6) — gives the Wolverines the lowest scoring variance of any 1-seed in the bracket. That&#x27;s a KenPom-friendly profile.</div>
     <div class="tw-tags"><span class="htag">#Cameron Boozer</span> <span class="htag">#AJ Dybantsa</span> <span class="htag">#Yaxel Lendeborg</span> <span class="htag">#Duke</span></div>
     <div class="tw-actions">
-      <span>&#128172; 17</span>
-      <span>&#128257; 15</span>
-      <span>&#10084;&#65039; 137</span>
+      <span>&#128172; 9</span>
+      <span>&#128257; 5</span>
+      <span>&#10084;&#65039; 177</span>
       <span>&#128065; 47K</span>
     </div>
   </div>
@@ -365,9 +422,9 @@ render();
     <div class="tw-body">Historical seed performance models flag two patterns for Round 2: 1-seeds with a 20+ PPG primary scorer survive at a 73% clip — Boozer (22.7, Duke) fits cleanly. But the model also consistently over-indexes 4-seeds with elite guard production. Darius Acuff Jr. (22.9 PPG, Arkansas) and Labaron Philon (21.7 PPG, Alabama) both match a historically dangerous archetype. Arkansas projects at 36% upset probability against a 1-seed matchup. The outlier play: Graham Ike (19.7 PPG) at 3-seed Gonzaga has the second-best efficiency-adjusted scoring profile in the entire field. My model likes him more than his seed suggests.</div>
     <div class="tw-tags"><span class="htag">#Cameron Boozer</span> <span class="htag">#Darius Acuff Jr.</span> <span class="htag">#Labaron Philon</span> <span class="htag">#Graham Ike</span></div>
     <div class="tw-actions">
-      <span>&#128172; 31</span>
-      <span>&#128257; 18</span>
-      <span>&#10084;&#65039; 192</span>
+      <span>&#128172; 17</span>
+      <span>&#128257; 6</span>
+      <span>&#10084;&#65039; 31</span>
       <span>&#128065; 187K</span>
     </div>
   </div>
@@ -378,9 +435,9 @@ render();
     <div class="tw-body">I&#x27;m not buying the Duke hype on Boozer&#x27;s 22.7 alone. What I want to see is how Isaiah Evans holds his assignment on the weak side when the ball reverses — that&#x27;s where the defensive breakdowns will show up. Kon Knueppel (12.0 PPG) is a shooter, but can he fight through a hard screen three possessions in a row? Duke is gonna face physicality in Round 2 and I need to see their wings hold ground. Flip side — Florida&#x27;s Thomas Haugh (17.1) plays hard every single possession. That relentless effort doesn&#x27;t always pop in the stat line but any coach watching that film sees it immediately. That&#x27;s a winning player.</div>
     <div class="tw-tags"><span class="htag">#Cameron Boozer</span> <span class="htag">#Isaiah Evans</span> <span class="htag">#Kon Knueppel</span> <span class="htag">#Thomas Haugh</span></div>
     <div class="tw-actions">
-      <span>&#128172; 34</span>
-      <span>&#128257; 7</span>
-      <span>&#10084;&#65039; 181</span>
+      <span>&#128172; 29</span>
+      <span>&#128257; 19</span>
+      <span>&#10084;&#65039; 135</span>
       <span>&#128065; 87K</span>
     </div>
   </div>
@@ -391,9 +448,9 @@ render();
     <div class="tw-body">Watched 6 hours of Cameron Boozer tape last night and I keep coming back to the same thing — his footwork in the post is unlike anything I&#x27;ve seen from a freshman in years. As a former receiver coach, I know what it looks like when someone has been drilled on their footwork since age 8. Boozer has that. The drop step, the pivot, the finish through contact — all there at 22.7 PPG. Duke&#x27;s 1-seed isn&#x27;t about the bracket. It&#x27;s about him. Film don&#x27;t lie. #MarchMadness #TheFilmRoom</div>
     <div class="tw-tags"><span class="htag">#Cameron Boozer</span> <span class="htag">#Duke</span></div>
     <div class="tw-actions">
-      <span>&#128172; 20</span>
-      <span>&#128257; 6</span>
-      <span>&#10084;&#65039; 9</span>
+      <span>&#128172; 8</span>
+      <span>&#128257; 2</span>
+      <span>&#10084;&#65039; 257</span>
       <span>&#128065; 84K</span>
     </div>
   </div>
@@ -404,9 +461,9 @@ render();
     <div class="tw-body">Running the numbers on Round 3 matchups. AJ Dybantsa (25.3 PPG) as a 6-seed is the single most dangerous offensive player in the bracket by usage-adjusted efficiency. BYU&#x27;s schedule-adjusted numbers put them inside the top 20 despite the seed. Meanwhile Duke&#x27;s supporting cast — Evans at 14.9, Knueppel at 12.0 — creates enough spacing to make Boozer&#x27;s 22.7 PPG repeatable in tournament conditions. The data says don&#x27;t sleep on a BYU-Duke collision. Full model drops Thursday. #KenPom #CollegeBasketball</div>
     <div class="tw-tags"><span class="htag">#AJ Dybantsa</span> <span class="htag">#BYU</span> <span class="htag">#Cameron Boozer</span> <span class="htag">#Duke</span></div>
     <div class="tw-actions">
-      <span>&#128172; 18</span>
-      <span>&#128257; 10</span>
-      <span>&#10084;&#65039; 208</span>
+      <span>&#128172; 23</span>
+      <span>&#128257; 14</span>
+      <span>&#10084;&#65039; 230</span>
       <span>&#128065; 47K</span>
     </div>
   </div>
@@ -417,9 +474,9 @@ render();
     <div class="tw-body">Historical check: 6-seeds beat 3-seeds in the Sweet 16 roughly 38% of the time when they carry a top-5 scorer in the field. AJ Dybantsa at 25.3 PPG qualifies. My models also flag Darius Acuff Jr. (22.9 PPG, 4-seed Arkansas) as structurally undervalued — his points-per-possession in high-leverage moments ranks 2nd among all tournament guards. The 1-seeds are formidable but this bracket has multiple seeding-based vulnerabilities. #BracketScience #SeedAdvantage</div>
     <div class="tw-tags"><span class="htag">#AJ Dybantsa</span> <span class="htag">#BYU</span> <span class="htag">#Darius Acuff Jr.</span> <span class="htag">#Arkansas</span></div>
     <div class="tw-actions">
-      <span>&#128172; 24</span>
-      <span>&#128257; 4</span>
-      <span>&#10084;&#65039; 256</span>
+      <span>&#128172; 26</span>
+      <span>&#128257; 14</span>
+      <span>&#10084;&#65039; 285</span>
       <span>&#128065; 187K</span>
     </div>
   </div>
@@ -430,9 +487,9 @@ render();
     <div class="tw-body">Stop me if you&#x27;ve heard this before — everyone&#x27;s watching the scorer, nobody&#x27;s watching what happens BEFORE the catch. I&#x27;ve been studying how defenses set against Boozer and the tell is always in the weak-side help rotation. When it comes late, he scores. When it comes early, he kicks. Isaiah Evans at 14.9 PPG is the beneficiary of that late rotation more than anyone on that roster. From a defensive coordinator&#x27;s lens — you stop Duke by stopping Evans first. Boozer is secondary. Don&#x27;t @ me. #ReadTheRoom #MarchMadness</div>
     <div class="tw-tags"><span class="htag">#Cameron Boozer</span> <span class="htag">#Duke</span> <span class="htag">#Isaiah Evans</span></div>
     <div class="tw-actions">
-      <span>&#128172; 11</span>
-      <span>&#128257; 5</span>
-      <span>&#10084;&#65039; 73</span>
+      <span>&#128172; 15</span>
+      <span>&#128257; 10</span>
+      <span>&#10084;&#65039; 7</span>
       <span>&#128065; 87K</span>
     </div>
   </div>
@@ -443,9 +500,9 @@ render();
     <div class="tw-body">Film room observation that nobody&#x27;s talking about: Isaiah Evans&#x27; off-ball movement is what makes Duke genuinely dangerous in March. I watched six straight possessions last night focused exclusively on his baseline cuts, and the defensive attention he commands is real. Cameron Boozer at 22.7 PPG gets all the headlines — rightfully so, that post footwork is legitimate — but it&#x27;s the way Evans (14.9 PPG) forces rotations that opens everything up. Coached receivers for 11 years. I know what it looks like when a guy understands spacing at a structural level. That Duke system is dialed in. Full breakdown dropping tomorrow morning. #FilmRoom #Duke #MarchMadness</div>
     <div class="tw-tags"><span class="htag">#Isaiah Evans</span> <span class="htag">#Cameron Boozer</span> <span class="htag">#Duke</span></div>
     <div class="tw-actions">
-      <span>&#128172; 4</span>
-      <span>&#128257; 16</span>
-      <span>&#10084;&#65039; 79</span>
+      <span>&#128172; 19</span>
+      <span>&#128257; 11</span>
+      <span>&#10084;&#65039; 103</span>
       <span>&#128065; 84K</span>
     </div>
   </div>
@@ -456,9 +513,9 @@ render();
     <div class="tw-body">Updated model inputs for Round 4. The 1-seed concentration this bracket is historically atypical — Duke, Florida, Arizona, Michigan all alive. What the raw numbers tell you: AJ Dybantsa at 25.3 PPG on a 6-seed BYU is the single highest-variance data point remaining. His scoring volume on a mid-major schedule creates legit projection uncertainty. Darius Acuff Jr. (22.9 PPG, Arkansas, 4-seed) is the other outlier — 4-seed scoring profile that belongs in the top line. Cameron Boozer (22.7 PPG) on the 1-seed is historically the safest correlation for a deep run. Numbers don&#x27;t lie. They just don&#x27;t always tell you when. #KenPom #Bracketology #TournamentAnalytics</div>
     <div class="tw-tags"><span class="htag">#AJ Dybantsa</span> <span class="htag">#Darius Acuff Jr.</span> <span class="htag">#Cameron Boozer</span> <span class="htag">#BYU</span></div>
     <div class="tw-actions">
-      <span>&#128172; 7</span>
-      <span>&#128257; 17</span>
-      <span>&#10084;&#65039; 218</span>
+      <span>&#128172; 2</span>
+      <span>&#128257; 20</span>
+      <span>&#10084;&#65039; 263</span>
       <span>&#128065; 47K</span>
     </div>
   </div>
@@ -469,9 +526,9 @@ render();
     <div class="tw-body">Predictive model refresh for Round 4: 1-seeds historically convert at elevated rates at this stage, but this year&#x27;s field has abnormal variance at the 4-line. Darius Acuff Jr. (22.9 PPG, Arkansas) and Darryn Peterson (19.8 PPG, Kansas) are both 4-seeds posting scoring averages that belong on 1-seed rosters. My upset probability model flags both Arkansas and Kansas as statistically overperforming their seed. On the 1-seed side, Arizona&#x27;s three-pronged attack — Burries (15.9), Peat (14.5), Bradley (13.5) — is the most balanced scoring distribution among top seeds remaining. Depth profiles like that trend positively in late-round simulations. Proceed accordingly. #SeedAdvantage #Bracketology #MarchMadness</div>
     <div class="tw-tags"><span class="htag">#Darius Acuff Jr.</span> <span class="htag">#Darryn Peterson</span> <span class="htag">#Brayden Burries</span> <span class="htag">#Koa Peat</span></div>
     <div class="tw-actions">
-      <span>&#128172; 39</span>
+      <span>&#128172; 10</span>
       <span>&#128257; 9</span>
-      <span>&#10084;&#65039; 262</span>
+      <span>&#10084;&#65039; 12</span>
       <span>&#128065; 187K</span>
     </div>
   </div>
@@ -482,9 +539,9 @@ render();
     <div class="tw-body">Everyone&#x27;s talking about who&#x27;s going to SCORE. I&#x27;m talking about who&#x27;s going to GUARD Cameron Boozer. I spent 15 years coaching linebackers and defensive schemes — I know what an unsolvable matchup problem looks like, and Boozer at 22.7 a game is exactly that. You go big, he&#x27;s too quick. You go small, he posts. You double, Duke has Isaiah Evans and Kon Knueppel ready to shoot. And it&#x27;s the same problem from Arizona&#x27;s frontcourt — Koa Peat at 14.5 PPG is a physical mismatch that punishes you for being undersized. Defense wins tournaments. Somebody has to solve these problems or it&#x27;s a short weekend. The tape is telling. #ReadTheRoom #MarchMadness</div>
     <div class="tw-tags"><span class="htag">#Cameron Boozer</span> <span class="htag">#Koa Peat</span> <span class="htag">#Isaiah Evans</span> <span class="htag">#Kon Knueppel</span></div>
     <div class="tw-actions">
-      <span>&#128172; 37</span>
-      <span>&#128257; 20</span>
-      <span>&#10084;&#65039; 28</span>
+      <span>&#128172; 22</span>
+      <span>&#128257; 2</span>
+      <span>&#10084;&#65039; 167</span>
       <span>&#128065; 87K</span>
     </div>
   </div>
